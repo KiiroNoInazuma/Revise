@@ -12,15 +12,15 @@ import java.util.stream.Stream;
 
 class UserTest {
     private static final String[] LOGIN = {"", "    ", "John_Rey", "Roma_N"};
-    private static final String[] PASSWORD = {"", "        ", "test.test@ru", "back@test!ru"};
+    private static final String[] MAIL = {"", "        ", "test.test@ru", "back@test!ru"};
     private static final String VALID_LOGIN = "John_Rey";
-    private static final String VALID_PASSWORD = "adioskid@mail.ru";
+    private static final String VALID_MAIL = "adioskid@mail.ru";
 
 
     public static Stream<Arguments> manyArg() {
         List<Arguments> list = new ArrayList<>();
         for (String l : LOGIN) {
-            for (String p : PASSWORD) {
+            for (String p : MAIL) {
                 list.add(Arguments.of(l, p));
             }
         }
@@ -30,15 +30,15 @@ class UserTest {
 
     @ParameterizedTest
     @MethodSource("manyArg")
-    public void checkCreateObjectNullBlankEmptyInValid(String login, String password) {
-        Assertions.assertThrows(IdentificationException.class, () -> new User(login, password));
+    public void checkCreateObjectNullBlankEmptyInValid(String login, String mail) {
+        Assertions.assertThrows(IdentificationException.class, () -> new User(login, mail));
     }
 
     @Test
-    public void identicalMailPassword() {
+    public void identicalLoginMail() {
         String login = "adioskid@mail.ru";
-        String password = "adioskid@mail.ru";
-        Assertions.assertThrows(IdentificationException.class, () -> new User(login, password));
+        String mail = "adioskid@mail.ru";
+        Assertions.assertThrows(IdentificationException.class, () -> new User(login, mail));
     }
 
     @Test
@@ -48,7 +48,7 @@ class UserTest {
 
     @Test
     public void validValue() {
-        Assertions.assertDoesNotThrow(() -> new User(VALID_LOGIN, VALID_PASSWORD));
+        Assertions.assertDoesNotThrow(() -> new User(VALID_LOGIN, VALID_MAIL));
     }
 
 }
